@@ -5,12 +5,12 @@ require("dotenv").config();
 const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 const trainees = [
-  { name: "Punith", phone: "+91xxxxxxxxxx" },
-  { name: "Laxmi", phone: "+91yyyyyyyyyy" },
-  { name: "Sameer", phone: "+91yyyyyyyyyy" }
+  { name: "Chahat", phone: "+919653697152" }
+//   { name: "Laxmi", phone: "+91yyyyyyyyyy" },
+//   { name: "Sameer", phone: "+91yyyyyyyyyy" }
 ];
 
-cron.schedule("0 7 * * *", async () => {
+cron.schedule("0 2 * * *", async () => {
   for (const trainee of trainees) {
     await client.messages.create({
       body: `Hi ${trainee.name}! Are you attending the badminton session today? Reply YES or NO.`,
