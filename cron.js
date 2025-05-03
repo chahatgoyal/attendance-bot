@@ -8,7 +8,7 @@ const client = twilio(
 
 // Sample trainees list – replace with your actual list
 const trainees = [
-    { name: "Chahat", phone: "+919653697152" }
+    { name: "Chahat", phone: "+919653697152" },
     { name: "Laxmi", phone: "+919731043868" },
     { name: "Birdie", phone: "+919980208172" },
     { name: "Punith", phone: "+919445579585" }
