@@ -1,0 +1,14 @@
+{
+    "name": "attendance-bot",
+    "version": "1.0.0",
+    "main": "cron.js",
+    "scripts": {
+      "start": "node cron.js"
+    },
+    "dependencies": {
+      "twilio": "^4.0.0",
+      "node-cron": "^3.0.0",
+      "dotenv": "^16.0.0"
+    }
+  }
+  
