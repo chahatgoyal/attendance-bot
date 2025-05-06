@@ -8,7 +8,7 @@ const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TO
 
 // List of trainees
 const trainees = [
-    { name: "Chahat", phone: "+919653697152" }
+    { name: "Chahat", phone: "whatsapp:+919653697152" }
   ];
   
 
