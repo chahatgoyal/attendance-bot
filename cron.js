@@ -1,41 +1,67 @@
-require('dotenv').config();
-const twilio = require('twilio');
+import twilio from "twilio";
+import dotenv from "dotenv";
 
-const client = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
+dotenv.config();
 
-// Sample trainees list – replace with your actual list
+const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
+// List of trainees
 const trainees = [
     { name: "Chahat", phone: "+919653697152" }
   ];
   
 
-async function sendMessages() {
+// Loop and send interactive button message
+async function sendInteractiveMessages() {
   for (const trainee of trainees) {
     try {
-      console.log(`➡️ Sending message to ${trainee.name}`);
-      const message = await client.messages.create({
-        body: `Hi ${trainee.name}! Are you attending today's badminton session? Reply YES or NO.`,
+      await client.messages.create({
         from: process.env.TWILIO_FROM_WHATSAPP,
-        to: `whatsapp:${trainee.phone}`
+        to: trainee.phone,
+        contentSid: '', // Not needed unless you're using a template
+        persistentAction: [],
+        content: {
+          messaging_product: 'whatsapp',
+          recipient_type: 'individual',
+          to: trainee.phone,
+          type: 'interactive',
+          interactive: {
+            type: 'button',
+            body: {
+              text: `Hi ${trainee.name}! Are you attending tomorrow’s 7:30 AM badminton session?`
+            },
+            action: {
+              buttons: [
+                {
+                  type: 'reply',
+                  reply: {
+                    id: 'yes_attending',
+                    title: '✅ Yes'
+                  }
+                },
+                {
+                  type: 'reply',
+                  reply: {
+                    id: 'no_attending',
+                    title: '❌ No'
+                  }
+                }
+              ]
+            }
+          }
+        }
       });
-      console.log(`✅ Sent to ${trainee.name}: ${message.sid}`);
+
+      console.log(`✅ Sent interactive prompt to ${trainee.name}`);
     } catch (err) {
-      console.error(`❌ Failed for ${trainee.name}:`, err.message);
-      throw new Error(`Failed to send message to ${trainee.name}`);
+      console.error(`❌ Error sending to ${trainee.name}:`, err.message);
     }
   }
 }
 
-sendMessages()
-  .then(() => {
-    console.log("🎉 All messages sent successfully.");
-    process.exit(0); // Exit gracefully
-  })
-  .catch((err) => {
-    console.error("🔥 Error in sending messages:", err.message);
-    process.exit(1); // Exit with failure code
+sendInteractiveMessages()
+  .then(() => process.exit(0))
+  .catch(err => {
+    console.error("🔥 Error:", err.message);
+    process.exit(1);
   });
-
