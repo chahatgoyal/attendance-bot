@@ -1,5 +1,6 @@
-import twilio from "twilio";
-import dotenv from "dotenv";
+// cron.js (CommonJS-compatible)
+const twilio = require('twilio');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
